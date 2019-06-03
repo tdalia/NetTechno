@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CustomerQueryWebAPI.ViewModels.QueryMasterListModel>
+
+<h3>UnResolved Queries of the Department</h3>
+<br />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.QueryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QueryDate)
+            </th>
+            <!--
+            <th>
+                @*Html.DisplayNameFor(model => model.QueryDateStr) *@
+            </th>
+                   <th>
+                        @*Html.DisplayNameFor(model => model.Message) *@
+                    </th>
+                    <th>
+                        @*Html.DisplayNameFor(model => model.Status) *@
+                    </th>
+                        -->
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QueryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QueryDateStr)
+                </td>
+                <!--
+                <td>
+                    @*Html.DisplayFor(modelItem => item.QueryDateStr) *@
+                </td>
+                        <td>
+                            @*Html.DisplayFor(modelItem => item.Message) *@
+                        </td>
+                        <td>
+                            @*Html.DisplayFor(modelItem => item.Status)   *@
+                        </td>
+                            -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Description)
+                </td>
+
+                <td>
+                    <a asp-controller="query" asp-action="addSolution" asp-route-id="@item.QueryId"><i class="fa fa-reply fa-lg" title="Reply Solution"></i> </a>
+
+                    @*Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="index" asp-controller="employee" class="btn btn-info"><i class="fa fa-reply fa-lg" title="Back"></i> Back </a>

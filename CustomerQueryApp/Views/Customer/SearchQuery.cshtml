@@ -1,0 +1,139 @@
+﻿@model CustomerQueryWebAPI.ViewModels.SearchQueryModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<h3> Query Status </h3>
+
+<div>
+    <form id="myForm" asp-action="searchQuery">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.QueryId)
+                </dt>
+                <dd>
+                    <input asp-for="QueryId" class="form-control" />
+                </dd>
+            </dl>
+        </div>
+        <!-- Button for form Submit
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-search"></i> Search
+    </button>-->
+        <!-- Trying to call Controller action thru Ajax -->
+        <a href="#" class="btn btn-primary" onclick="ShowResult()"><i class="fas fa-search"></i> A-Search</a>
+        <a asp-controller="customer" asp-action="Index" class="btn btn-info" title="Back"><i class="fa fa-reply"> Back</i></a>
+
+    </form>
+</div>
+
+<div id="queryResultContent">
+
+</div>
+
+<!-- MODAL DIALOG
+    Displays Query Results/Details
+    -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Query Answer</h3>
+            </div>
+            <div class="modal-body" id="myModalBodyDiv">
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-success" data-dismiss="modal">Ok</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        function callCtrler() {
+            var queryId = $("#QueryId").val();
+            alert(queryId);
+
+            // Call GET with Para, Returns Json  - WORKS
+            /*
+            var url = "/customer/respondToAjax";
+            $.get(url, { queryId: queryId }, function (data) {
+                alert(data);
+            });
+            */
+
+            // cALL GET with Para, returns PartialView
+            var url = "/query/viewQueryAjaxTest";
+            $.get(url, { queryId: queryId }, function (data) {
+                alert(data);
+            });
+
+            /*
+            $.ajax({
+                url: 'Url.Action("viewQueryAjaxTest", "Query")',
+                type: 'GET',
+                dataType: 'html',
+                cache: false,
+                traditional: true,
+                data: { queryId: queryId },
+                success: function (responseText, textStatus, XMLHttpRequest) {
+                    $("#queryResultContent").empty();
+                    $("#queryResultContent").html(responseText);
+                    //alert(data);
+                },
+                error: function (XMLHttpRequest) {
+                    alert("Error Sttus :" + XMLHttpRequest.status);
+                }
+            });*/
+
+
+            /* Calls & Displays results properly
+            var req = new XMLHttpRequest();
+            req.open('GET', 'Url.Action("RespondToAjax", "Customer")', true);
+           // req.setRequestHeader('Content-Type', 'application/json');
+
+            req.onload = function () {
+                if (req.status >= 200 && req.status < 400) {
+                    alert(req.responseText);
+                } else {
+                    alert("we encountered an error : " + req.status + " Error: " + req.error);
+                }
+            }*/
+
+
+            //req.send();
+        }
+
+        //var ShowResult = function () {
+        function ShowResult() {
+            // Retrieve queryId
+            var queryId = $("#QueryId").val();
+
+            // Validate queryId - Make sure it's int & > 0
+
+            // Display
+            //alert("Entered ID " + queryId);
+
+            // TRIED '/query/viewQuery' ALSO
+            $.ajax({
+                type: 'GET',
+                url: '/query/viewQuery/' + queryId,
+                success: function (response) {
+                    //alert(response);    // DISPLAYS [Object: object]
+                    $("#myModalBodyDiv").html(response);
+
+                    $('#myModal').modal("show");
+                }, error: function (response) {
+                    alert("Error: " + response);
+                }
+            });
+
+        }
+    </script>
+}

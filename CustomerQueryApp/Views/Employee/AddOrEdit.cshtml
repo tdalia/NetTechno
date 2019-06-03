@@ -1,0 +1,91 @@
+﻿@model CustomerQueryData.Models.Employee
+@using CustomerQueryApp.ViewModels;
+
+@{
+    ViewData["Title"] = "Add-Edit";
+    var user = (LoginViewModel)TempData["LoggedUser"];
+    if( user == null)
+    {
+        return;
+    }
+}
+
+<h4>Employee Details</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmployeeId" />
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" value="@Model.Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="RoleId" class="control-label"></label>
+                    <select asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="EmpAvgRating" class="control-label"></label>
+                    <input asp-for="EmpAvgRating" class="form-control" />
+                    <span asp-validation-for="EmpAvgRating" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="DeptId" class="control-label"></label>
+                    <select asp-for="DeptId" class="form-control" asp-items="ViewBag.DeptId"></select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                </div>
+                <div class="form-group col-md-6">
+                    @if (user.RoleName.StartsWith("Emp", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <a asp-action="Index" asp-controller="Employee" class="btn btn-default btn-info"><i class="fa fa-reply"> </i> Back </a>
+                    }
+                    else if (user.RoleName.StartsWith("Admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <a asp-action="Index" asp-controller="Admin" class="btn btn-default btn-info"><i class="fa fa-reply"> </i> Back </a>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

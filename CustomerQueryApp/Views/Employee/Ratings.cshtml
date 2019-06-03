@@ -1,0 +1,102 @@
+﻿@model CustomerQueryWebAPI.ViewModels.RatingViewModel
+<!-- EMPLOYEE RATING -->
+<div class="panel">
+    <div class="page-header">
+        <h3>Average Ratings</h3>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-responsive">
+            <tr>
+                <td width="70%">Customer Satisfaction Level for you, Sean, are : </td>
+                <td><input asp-for="EmployeeRating" class="form-control" readonly /></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<br />
+<hr />
+
+<!-- EMPLOYEE's LIST OF SAME DEPT -->
+<div class="panel">
+    <div class="panel-heading">
+        <h3> Ratings of your colleague's</h3>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Ratings</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.EmployeesSameDeptList)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.EmpName)</td>
+                        <td>
+                            @if (item.EmpAvgRating.HasValue)
+                            {
+                                @Html.DisplayFor(modelItem => item.EmpAvgRating)
+                            }
+                            else
+                            {
+                                <label title="No Ratings" class="text-warning">No Ratings</label>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br />
+<hr />
+<!-- Department Ratings -->
+<div class="panel">
+    <div class="page-header">
+        <h3> Department Ratings</h3>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th> Department Name    </th>
+                    <th> Ratings </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DeptViewModelList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeptName)
+                        </td>
+                        <td>
+                            @if (item.DeptAvgRating.HasValue)
+                            {
+                                @Html.DisplayFor(modelItem => item.DeptAvgRating)
+                            }
+                            else
+                            {
+                                <label title="No Ratings" class="text-warning">No Ratings</label>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br />
+
+<div class="container">
+    <br />
+    <input type="hidden" />
+</div>
+<a asp-action="index" asp-controller="employee" class="btn btn-info"><i class="fa fa-reply fa-lg" title="Back"></i> Back </a>
+

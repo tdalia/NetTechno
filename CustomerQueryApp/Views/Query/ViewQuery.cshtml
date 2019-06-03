@@ -1,0 +1,96 @@
+﻿@model CustomerQueryWebAPI.ViewModels.QueryMasterListModel
+
+@{
+    Layout = "/Views/Shared/_LayoutForModal.cshtml";
+}
+
+
+<h4>Query Details</h4>
+
+
+@if (ViewData["Error"].ToString() == "")
+{
+    //<div class="panel" style="width:auto; background-color:none">
+    <table class="table table-responsive" style="width:50%">
+        <tr>
+            <td width="30%"> <b> @Html.DisplayNameFor(model => model.CustomerName) </b> </td>
+            <td> @Html.DisplayFor(model => model.CustomerName) </td>
+        </tr>
+        <tr>
+            <td width="30%"> <b> @Html.DisplayNameFor(model => model.QueryId) </b></td>
+            <td> @Html.DisplayFor(model => model.QueryId) </td>
+        </tr>
+        <tr>
+            <td width="30%"> <b> @Html.DisplayNameFor(model => model.Title) </b></td>
+            <td> @Html.DisplayFor(model => model.Title) </td>
+        </tr>
+        <tr>
+            <td width="30%"> <b> @Html.DisplayNameFor(model => model.QueryDateStr) </b></td>
+            <td> @Html.DisplayFor(model => model.QueryDateStr) </td>
+        </tr>
+        <tr>
+            <td width="30%"> <b> @Html.DisplayNameFor(model => model.Status) </b></td>
+            <td> @Html.DisplayFor(model => model.Status) </td>
+        </tr>
+        <tr>
+            <td width="30%"> <b> @Html.DisplayNameFor(model => model.ProductId) </b></td>
+            <td> @Html.DisplayFor(model => model.Product.Description) </td>
+        </tr>
+        <tr>
+            <td width="30%"> <b> @Html.DisplayNameFor(model => model.DeptId) </b></td>
+            <td> @Html.DisplayFor(model => model.DepartmentName) </td>
+        </tr>
+        <tr>
+            <td width="30%"> <b> @Html.DisplayNameFor(model => model.Message) </b></td>
+            <td> @Html.DisplayFor(model => model.Message) </td>
+        </tr>
+    </table>
+    //</div>
+
+    //<hr style="border: 1px solid green;" />
+
+    <div class="panel panel-success" style="width:50%; color:green;">
+    @foreach (var qaVM in Model.QueryAssigns)
+    {
+
+        <table class="table table-responsive">
+            <tbody>
+                <tr>
+                    <!--
+                                <td>
+                                    @*Html.LabelFor(vm => qaVM.ResponseDateStr)  *@
+                                </td>
+                                <td>
+                                    @*Html.DisplayFor(vm => qaVM.ResponseDateStr)  *@
+                                </td>
+                    -->
+                    <td width="20%">
+                        <b> @Html.LabelFor(vm => qaVM.Message) </b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(vm => qaVM.Message)
+                    </td>
+                    <!--
+                                <td>
+                                    @*Html.DisplayFor(vm => qaVM.FromCustOrEmp)  *@
+                                </td>
+                    -->
+                </tr>
+            </tbody>
+        </table>
+    }
+
+    </div>
+}
+else
+{
+    <div class="panel panel-warning">
+        <div class="panel-body text-danger">
+            @ViewData["Error"]
+        </div>
+    </div>
+}
+<!--<br />
+<div class="panel">
+<a asp-controller="customer" asp-action="Index" class="btn btn-info"><i class="fa fa-reply"> </i> Back</a>-->
+<!--</div> -->

@@ -1,0 +1,108 @@
+﻿@model CustomerQueryWebAPI.ViewModels.QueryAssignViewModel
+
+<br/>
+<h4>Provide Reply to Query</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-controller="query" asp-action="postSolution">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input asp-for="QueryId" type="hidden" />
+            <input asp-for="ResponseDate" class="form-control" readonly type="hidden" />
+            <input asp-for="EmployeeId" type="hidden" />
+            <input asp-for="CustomerId" type="hidden" />
+            <input asp-for="FromCustOrEmp" type="hidden" />
+
+            <!--
+    <div class="form-group">
+        <label asp-for="Id" class="control-label"></label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="QueryId" class="control-label"></label>
+        <input asp-for="QueryId" class="form-control" />
+        <span asp-validation-for="QueryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CustomerId" class="control-label"></label>
+        <input asp-for="CustomerId" class="form-control" />
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    </div>
+            <div class="form-group">
+                <label asp-for="ResponseDate" class="control-label"></label>
+                <input asp-for="ResponseDate" class="form-control" />
+                <span asp-validation-for="ResponseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FromCustOrEmp" class="control-label"></label>
+                <input asp-for="FromCustOrEmp" class="form-control" />
+                <span asp-validation-for="FromCustOrEmp" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <input asp-for="EmployeeId" class="form-control" />
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ForDeptId" class="control-label"></label>
+                <input asp-for="ForDeptId" class="form-control" />
+                <span asp-validation-for="ForDeptId" class="text-danger"></span>
+            </div>
+                -->
+
+            <div class="jumbotron">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="CustomerName" class="control-label"></label>
+                        <input asp-for="CustomerName" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Product" class="control-label"></label>
+                        <input asp-for="Product.Description" class="form-control" readonly />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="QueryDate" class="control-label"></label>
+                        <input asp-for="QueryDate" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="QueryTitle" class="control-label"></label>
+                        <input asp-for="QueryTitle" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="QueryQuestion" class="control-label"></label>
+                        <input asp-for="QueryQuestion" class="form-control" readonly />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Message" class="control-label"></label>
+                <input asp-for="Message" class="form-control" />
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-check"></i> Add Solution
+                </button>
+                <a asp-controller="employee" asp-action="queries" class="btn btn-info"><i class="fa fa-reply"> </i> Back to Queries</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

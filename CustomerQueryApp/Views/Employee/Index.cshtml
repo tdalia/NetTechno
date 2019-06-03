@@ -1,0 +1,41 @@
+﻿
+@using CustomerQueryApp.ViewModels;
+
+@{
+    ViewData["Title"] = "Index";
+    LoginViewModel user = null;
+
+    if (ViewData["LoggedUser"] != null)
+    {
+        user = (LoginViewModel)ViewData["LoggedUser"];
+    }
+}
+
+<h3>Employee Home</h3>
+<h4>Welcome @user.FirstName</h4>
+<hr />
+
+<table class="table table-responsive">
+    <tr class="pull-right" style="margin-right:20px;">
+        @if (user != null)
+        {
+            if (user.RoleId == 1)
+            {
+                <th>
+                    <a asp-controller="admin" asp-action="Index" class="btn btn-success"> Admin Portal</a>
+                </th>
+            }
+        }
+        <th>
+            <a asp-controller="employee" asp-action="AddOrEdit" asp-route-id=@ViewData["LoggedId"] class="btn btn-default btn-info"><i class="fa fa-marker fa-lg"> </i> View Profile</a>
+        </th>
+        <th>
+            <a asp-controller="employee" asp-action="queries" class="btn btn-default btn-info"><i class="fa fa-table"> </i> New Queries</a>
+        </th>
+        <th>
+            <a asp-controller="employee" asp-action="ratings" class="btn btn-default btn-info"><i class="fa fa-table"> </i> Ratings</a>
+        </th>
+
+    </tr>
+</table>
+

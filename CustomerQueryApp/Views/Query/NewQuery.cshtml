@@ -1,0 +1,185 @@
+﻿@model CustomerQueryWebAPI.ViewModels.QueryMasterListModel
+
+<br />
+<h4>Post New Query</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="NewQuery">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* If a new query to be posted  *@
+            @if (Model.QueryId == 0)
+            {
+                <input asp-for="QueryId" type="hidden" />
+                <input asp-for="CustomerId" type="hidden" />
+                <input asp-for="Status" type="hidden" />
+                <input asp-for="QueryDate" type="hidden" />
+            }
+            else
+            {
+                <div class="form-group ">
+                    <label asp-for="QueryId" class="control-label"></label>
+                    <input asp-for="QueryId" class="form-control" readonly />
+                    @Html.DisplayFor(m => Model.QueryId)
+                </div>
+                <div class="form-group">
+                    <label asp-for="CustomerId" class="control-label"></label>
+                    <input asp-for="CustomerId" class="form-control" />
+                    <span asp-validation-for="CustomerId" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                <!-- <input asp-for="ProductId" class="form-control" />  -->
+                @*Html.DropDownListFor(m => m.Product, new SelectList(Model.Products, "ProductId", "Description"), "Select Product") *@
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                <span asp-validation-for="Products" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeptId" class="control-label"></label>
+                <select asp-for="DeptId" class="form-control" asp-items="ViewBag.DeptId"></select>
+                <span asp-validation-for="DeptId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message" class="control-label"></label>
+                <input asp-for="Message" class="form-control" />
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Post
+                </button>
+                <a href="#" class="btn btn-primary" onclick="PostQuery()">Ajax</a>
+                <a asp-controller="customer" asp-action="Index" class="btn btn-info"><i class="fa fa-reply" title="Back"> Back</i></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--
+    <input type="button" value="GO BACK" class="btn btn-primary"
+       onclick="location.href='Request.UrlReferrer'" />
+-->
+@*Html.ActionLink("Back to previous page", null, null, null, new { href = HttpContext.Request.Headers["Referer"] })*@
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+@if (Model.QueryId != 0)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("Inserted Query ID: " + @Model.QueryId);
+            });
+    </script>
+}
+
+<!--
+// Submit Form
+https://localhost:44344/Query/NewQuery
+:authority: localhost:44344
+:method: POST
+:path: /Query/NewQuery
+:scheme: https
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
+accept-encoding: gzip, deflate, br
+accept-language: en-US,en;q=0.9
+cache-control: max-age=0
+content-length: 337
+content-type: application/x-www-form-urlencoded
+cookie: .AspNet.Consent=yes; .AspNetCore.Antiforgery.Zi41mPj7T88=CfDJ8OiCApoey_hBkDaQKBcBmniA7N8Tx4V8AoqskVSirt3EsTy1JzAH4bf5yxcXewZ-mKEGCxoW00Vo-Yhi1Iq6skqKCepK5ypsyfr-bNlaLjq01CJFdSrENk7cLCW5aDl1qm2o3-ZnFpq5m58Amd-icC8
+origin: https://localhost:44344
+referer: https://localhost:44344/Query/newQuery
+
+QueryId: 0
+CustomerId: 1
+Status: New
+QueryDate: 24-05-2019 00:00:00
+ProductId: 1
+DeptId: 3
+Title: Is Available !
+Message: This model is available or not ?
+__RequestVerificationToken:
+
+
+
+
+// Thru Ajax
+Request URL: https://localhost:44344/query/NewQuery
+Request Method: POST
+Status Code: 400
+-------RESPONSE HEDERS
+content-length: 0
+date: Sat, 25 May 2019 03:12:53 GMT
+server: Kestrel
+status: 400
+x-powered-by: ASP.NET
+x-sourcefiles: =?UTF-8?B?RDpcQ29nZW50VHJhaW5pbmdcTkVUIE1hcmtldFxQcm9qZWN0c1xDdXN0b21lclF1ZXJ5QXBwXEN1c3RvbWVyUXVlcnlBcHBccXVlcnlcTmV3UXVlcnk=?=
+:authority: localhost:44344
+:method: POST
+:path: /query/NewQuery
+:scheme: https
+accept: */*
+accept-encoding: gzip, deflate, br
+accept-language: en-US,en;q=0.9
+content-length: 128
+content-type: application/x-www-form-urlencoded; charset=UTF-8
+cookie: .AspNet.Consent=yes; .AspNetCore.Antiforgery.Zi41mPj7T88=CfDJ8OiCApoey_hBkDaQKBcBmniA7N8Tx4V8AoqskVSirt3EsTy1JzAH4bf5yxcXewZ-mKEGCxoW00Vo-Yhi1Iq6skqKCepK5ypsyfr-bNlaLjq01CJFdSrENk7cLCW5aDl1qm2o3-ZnFpq5m58Amd-icC8
+origin: https://localhost:44344
+referer: https://localhost:44344/Query/newQuery
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36
+x-requested-with: XMLHttpRequest
+
+------------ FORM DATA
+QueryId: 0
+CustomerId: 1
+ProductId: 1
+DeptId: 3
+Title: N model
+Message: No suitable model
+QueryDate: 24-05-2019 00:00:00
+Status: New
+-->
+
+@section Scripts {
+    <script type="text/javascript">
+
+        // Posts/Submits query
+        function PostQuery() {
+            // Call PostQuery
+            $.ajax({
+                type: 'POST',
+                url: '/query/NewQuery',
+                data: {
+                    QueryId: $("#QueryId").val(),
+                    CustomerId: $("#CustomerId").val(),
+                    ProductId: $("#ProductId").val(),
+                    DeptId: $("#DeptId").val(),
+                    Title: $("#Title").val(),
+                    Message: $("#Message").val(),
+                    QueryDate: $("#QueryDate").val(),
+                    Status: $("#Status").val()
+                },
+                success: function (response) {
+                    //       alert(response);    // DISPLAYS [Object: object]
+                    $("#myModalBodyDiv").html(response);
+                    $('#myModal').modal("show");
+
+                }, error: function (response) {
+                    alert("Submit Query Error: " + response);
+                }
+            });
+        }
+
+    </script>
+}
+
+

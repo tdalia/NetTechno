@@ -1,0 +1,39 @@
+﻿@model CustomerQueryWebAPI.ViewModels.SurveyViewModel
+
+<h4>Survey</h4>
+<hr />
+
+<p>
+    Your Survey is very Important to us. It helps us identify how Satisfied our Customer's are
+    with our service and where should we improve.
+</p>
+<p>
+    Kindly give your ratings for our one to All Departments on the basis of 1 - Poor to 5 - Excellent
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="postDeptSurvey">
+            <div class="form-group col-md-4">
+                <label asp-for="Ratings" class="control-label"></label>
+                <input asp-for="Ratings" class="form-control" min="1" max="5" step="1" />
+                <span asp-validation-for="Ratings" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="DeptId" class="control-label"></label>
+                <select asp-for="DeptId" class="form-control" asp-items="ViewBag.DeptId"></select>
+            </div>
+            <div class="form-group col-md-6 pull-right">
+                <button type="submit" class="btn btn-primary" title="Rate Department">
+                    <i class="fas fa-star"></i> Rate
+                </button>
+                <a asp-controller="customer" asp-action="Index" class="btn btn-info" title="Back"><i class="fa fa-reply"> Back</i></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="warning">
+    @ViewBag.Error
+</div>
+

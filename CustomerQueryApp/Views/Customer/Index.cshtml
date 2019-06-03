@@ -1,0 +1,213 @@
+﻿@model CustomerQueryApp.ViewModels.Customer.CustomerIndexModel
+@*
+    IEnumerable<CustomerQueryApp.ViewModels.Customer.CustomerIndexListingModel>
+*@
+
+@{
+    ViewData["Title"] = "Customer Home";
+}
+
+<h1><a asp-action="Index">Customer Home Page </a></h1>
+
+<!-- Header Links -->
+<table class="table">
+    <tr>
+        <th>
+            <a asp-action="getCustomer" class="btn btn-default btn-info"><i class="fa fa-table"> </i> New Customer</a>
+        </th>
+        <th>
+            <a asp-action="AddOrEdit" asp-route-id="1" class="btn btn-default btn-info" title="View Profile"><i class="fas fa-eye"></i> View Profile</a>
+        </th>
+        <th>
+            <a asp-action="searchQuery" class="btn btn-default btn-info" title="Check Query Status"><i class="fa fa-check"> </i> Query Status</a>
+        </th>
+        <th>
+            <a asp-controller="survey" asp-action="sendDeptSurvey" class="btn btn-default btn-info" title="Survey"><i class="fas fa-poll"> </i> Survey</a>
+        </th>
+        <th>
+            <a asp-action="queryFaq" class="btn btn-default btn-info" title="Query FAQ"><i class="fa fa-question"> </i> Query FAQ</a>
+        </th>
+    </tr>
+</table>
+
+<div class="row">
+    <div style="float:left; width: 60%;">
+        <h3>Un-Resolved Query(s)</h3>
+    </div>
+    <div style="text-align:right; margin-right: 10px;">
+        <a asp-controller="Query" asp-action="newQuery" class="btn btn-default btn-info btn-sm"><i class="fa fa-table"> </i> Post New</a>
+    </div>
+</div>
+
+<!-- List of UnResolved Queries -->
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Query Id
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Product
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CustomerUnResolvedQuerys)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.QueryId)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.QueryDateStr)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Product.Description)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Status)
+                    @if (item.Status == QueryStatus.New)
+                    {
+                        <a href="" style="background-color:lawngreen;">
+                            <i class="far fa-plus-square fa-lg text-right"></i>
+                        </a>
+                    }
+                </th>
+                <th>
+                    <!-- <a asp-controller="query" asp-action="viewQuery" asp-route-id="@item.QueryId"><i class="fas fa-eye fa-lg" title="View"></i> </a> -->
+                    <a href="#" class="fas fa-eye fa-lg" title="View" onclick="ShowQuery(@item.QueryId)"></a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<hr />
+<h3>Recent Resolved Query(s)</h3>
+<h5>@ViewData["Error"]</h5>
+
+<!-- List of UnResolved Queries -->
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Query Id
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Product
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CustomerRecentResolvedQuerys)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.QueryId)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.QueryDateStr)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Product.Description)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </th>
+                <th>
+                    <!-- <a asp-controller="query" asp-action="viewQuery" asp-route-id="@item.QueryId"><i class="fas fa-eye fa-lg" title="View"></i> </a> -->
+                    <a href="#" class="fas fa-eye fa-lg" title="View" onclick="ShowQuery(@item.QueryId)"></a>
+
+                    @if (item.isQuerySolutionRated == false)
+                    {
+                        <a asp-controller="survey" asp-action="sendSolutionSurvey" asp-route-id="@item.QueryId"><i class="fas fa-star fa-lg" title="Rate Solution"></i> </a>
+                    }
+                    <!--
+               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#add-EmpSurvey" data-url="@Url.Action("EmpSurvey", "customer")">
+                   <i class="fas fa-star" title="Rate Solution"></i>
+               </button>
+    -->
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- MODAL DIALOG 
+    Displays Query Details
+    -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Query Answer</h3>
+            </div>
+            <div class="modal-body" id="myModalBodyDiv">
+
+            </div>
+            <!--
+    <div class="modal-footer">
+        <a href="#" class="btn btn-success" data-dismiss="modal">Ok</a>
+    </div>
+        -->
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        // Retrieves & Displays details of Query in modal
+        function ShowQuery(queryId) {
+            // Display
+           // alert("Entered ID " + queryId);
+
+            // Call ViewQuery 
+            $.ajax({
+                type: 'GET',
+                url: '/query/viewQuery/' + queryId,
+                success: function (response) {
+             //       alert(response);    // DISPLAYS [Object: object]
+                    $("#myModalBodyDiv").html(response);
+                    $('#myModal').modal("show");
+
+                }, error: function (response) {
+                    alert("ShowQuery Error: " + response);
+                }
+            });
+
+        }
+    </script>
+}
+

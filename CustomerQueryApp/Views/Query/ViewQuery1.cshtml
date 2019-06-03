@@ -1,0 +1,74 @@
+﻿@model CustomerQueryWebAPI.ViewModels.QueryMasterListModel
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@Html.DisplayFor(m => m.QueryId)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QueryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QueryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QueryDateStr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @*foreach (var item in Model) {  *@
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.QueryId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.QueryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.QueryDateStr)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Message)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+        @*} *@
+    </tbody>
+</table>
